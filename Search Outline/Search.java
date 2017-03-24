@@ -4,35 +4,20 @@ public class Search {
 	private Results results;
 	private Location location;
 	
+	private static Search singleton;
+	
 	//TODO: add constructors, searches, and setter using google places
+	
+	public Search getInstance(){
+		if(singleton == null){
+			singleton = new Search();
+		}
+		return singleton;
+	}
 	
 	public Search(){
 		search = new NoFilterSearch();
 		location = null;
-		results = null;
-	}
-	
-	public Search(Location loc){
-		location = loc;
-		search = new NoFilterSearch();
-		results = null;
-	}
-	
-	public Search(String filter){
-		location = null;
-		setFilter(filter);
-		results = null;
-	}
-
-	public Search(Location loc, String filter){
-		location = loc;
-		setFilter(filter);
-		results = null;
-	}
-	
-	public Search(String filter, Location loc){
-		location = loc;
-		setFilter(filter);
 		results = null;
 	}
 	
