@@ -1,6 +1,6 @@
 
 public class Station {
-	private BathroomRating bathroom;
+	private Bathroom bathroom;
 	private Restaurants restaurants;
 	private Price price;
 	private Location location;
@@ -12,7 +12,7 @@ public class Station {
 		location = null;
 	}
 	
-	public BathroomRating getBathroomRating(){
+	public Bathroom getBathroom(){
 		return bathroom;
 	}
 	
@@ -28,8 +28,8 @@ public class Station {
 		return location;
 	}
 	
-	public void setBathroomRating(BathroomRating rating){
-		bathroom = rating;
+	public void setBathroom(Bathroom restroom){
+		bathroom = restroom;
 	}
 	
 	public void getRestaurants(Restaurants toChange){
