@@ -1,11 +1,11 @@
-//will be stores in a database with station, if we implement
+//will be stored in a database with station, if we implement
 
 
-public class BathroomRating{
+public class Bathroom{
 	double rating;
 	int rates;
 	
-	public BathroomRating(){
+	public Bathroom(){
 		rating = 0;
 		rates = 0;
 	}
