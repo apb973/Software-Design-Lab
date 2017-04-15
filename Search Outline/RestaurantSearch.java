@@ -43,5 +43,5 @@ public class RestaurantSearch implements Searchable{
 			results.removeStation(next);
 		}
 		return sorted;
-	}
+	} 
 }
