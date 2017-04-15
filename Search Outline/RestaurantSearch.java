@@ -24,12 +24,24 @@ public class RestaurantSearch implements Searchable{
 		setStationPrices(results);
 		setRestaurants(results);
 		
-		sort(results);
+		results = sort(results);
 		return results;
 	}
 	
 	public Results sort(Results results){
 		//put most restaurants first in results
-		return results;
+		Results sorted = new Results();
+		Station next;
+		while(results.size() > 0){
+			next = results.getStation(0);
+			for(int i = 1; i < results.size(); i++){
+				if(next.getRestaurants().size() < results.getStation(i).getRestaurants().size()){
+					next = results.getStation(i);
+				}
+			}
+			sorted.addStation(next);
+			results.removeStation(next);
+		}
+		return sorted;
 	}
 }
