@@ -24,12 +24,24 @@ public class BathroomSearch implements Searchable{
 		setStationPrices(results);
 		setRestaurants(results);
 		
-		sort(results);
+		results = sort(results);
 		return results;
 	}
 	
 	public Results sort(Results results){
 		//put highest rating first in results
-		return results;
+		Results sorted = new Results();
+		Station next;
+		while(results.size() > 0){
+			next = results.getStation(0);
+			for(int i = 1; i < results.size(); i++){
+				if(next.getBathroom().getRating() < results.getStation(i).getBathroom().getRating()){
+					next = results.getStation(i);
+				}
+			}
+			sorted.addStation(next);
+			results.removeStation(next);
+		}
+		return sorted;
 	}
 }
