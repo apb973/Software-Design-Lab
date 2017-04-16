@@ -2,13 +2,13 @@
 public class Station {
 	private Bathroom bathroom;
 	private Restaurants restaurants;
-	private Price price;
+	private double price;
 	private Location location;
 	
 	public Station(){
 		bathroom = null;
 		restaurants = null;
-		price = null;
+		price = 0;
 		location = null;
 	}
 	
@@ -20,7 +20,7 @@ public class Station {
 		return restaurants;
 	}
 	
-	public Price getPrice(){
+	public double getPrice(){
 		return price;
 	}
 	
@@ -36,7 +36,7 @@ public class Station {
 		restaurants = toChange;
 	}
 	
-	public void getPrice(Price toChange){
+	public void getPrice(double toChange){
 		price = toChange;
 	}
 	
