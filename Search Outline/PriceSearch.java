@@ -26,7 +26,7 @@ public class PriceSearch implements Searchable {
 		while(results.size() > 0){
 			next = results.getStation(0);
 			for(int i = 1; i < results.size(); i++){
-				if(next.getPrice().getPrice() > results.getStation(i).getPrice().getPrice()){
+				if(next.getPrice() > results.getStation(i).getPrice()){
 					next = results.getStation(i);
 				}
 			}
