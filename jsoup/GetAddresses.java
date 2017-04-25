@@ -12,14 +12,15 @@ public class GetAddresses {
     public static void main(String[] args) {
 
         Document doc;
+        int zipcode = 75081;
         try {
 
             // need http protocol
-            doc = Jsoup.connect("http://www.austingasprices.com/").get();
+            doc = Jsoup.connect("http://www.autoblog.com/" + zipcode + "-gas-prices/").get();
 
             // get all tr 
-            Elements list = doc.select("dd");
-            for (Element listObject : list) {
+            Elements addlist = doc.select("dd");
+            for (Element listObject : addlist) {
 
                 // get the value from tr attribute
             	if (!(listObject.text().isEmpty())){

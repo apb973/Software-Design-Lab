@@ -23,7 +23,17 @@ public class Testerjsoup {
 
                 // get the value from tr attribute
             	if (listObject.text().startsWith(".", 1)){
-                    System.out.println("listObject : " + listObject.text());
+            		
+            		String[] printThis = listObject.text().split("Austin");
+            		printThis = printThis[0].split("update");
+            		
+            		System.out.print("listObject : ");
+            		for (String something : printThis){
+            			something.trim();
+                        System.out.print(something);
+            		}
+            		System.out.print("\n");
+                    
             	}
             }
         } catch (IOException e) {
