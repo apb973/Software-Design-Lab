@@ -1,5 +1,5 @@
 
-public class RestaurantSearch implements Searchable{
+public class RestaurantSearch extends Queryable implements Searchable{
 	
 	private int radius = 5;
 	
