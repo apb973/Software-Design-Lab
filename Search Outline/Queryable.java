@@ -7,7 +7,7 @@ import org.jsoup.nodes.Element;
 
 public class Queryable {
 
-    public static Results nearbyGoogleStations(Location location) {
+    public Results nearbyGoogleStations(Location location) {
         Document doc;
         Results names = new Results();
         try {
@@ -33,7 +33,7 @@ public class Queryable {
 
     }
     
-    public static Station specificGoogleStation(String address, Location location){
+    public Station specificGoogleStation(String address, Location location){
     	Document doc;
         try {
             doc = Jsoup.connect("https://maps.googleapis.com/maps/api/place/nearbysearch/xml?location=" + location.getLattitude() + ",+" + location.getLongitude() + "&rankby=distance&type=gas_station&key=AIzaSyDvb8h33wTteNR1NbHN9f0m1Y2HfgdwkwU&keyword" + address).get();
@@ -59,7 +59,7 @@ public class Queryable {
         return new Station();
     }
     
-    public static GasQueryInput gasPriceQueryInfo(Location location){
+    public GasQueryInput gasPriceQueryInfo(Location location){
     	Document doc;
     	GasQueryInput toReturn = new GasQueryInput();
         try {
@@ -70,7 +70,7 @@ public class Queryable {
             Elements zipCodeElements = doc.select("adr_address");
             String[] zipCodePassOne = zipCodeElements.get(0).text().split("e\">");
             String[] zipCodePassTwo = zipCodePassOne[1].split("[^0-9]");
-            toReturn.setZipCode(zipCodePassTwo[0]);
+            toReturn.setZipCode(Integer.parseInt(zipCodePassTwo[0]));
             String[] cityPassOne = zipCodeElements.get(0).text().split("y\">");
             String[] cityPassTwo = cityPassOne[1].split("<");
             toReturn.setCity(cityPassTwo[0]);
@@ -80,7 +80,7 @@ public class Queryable {
         return toReturn;
     }
     
-    public static Restaurants googleRestaurants(Location location){
+    public Restaurants googleRestaurants(Location location){
     	 Document doc;
     	 Restaurants names = new Restaurants();
 	        try {
@@ -99,9 +99,8 @@ public class Queryable {
 	        return names;
     }
     
-	private static Results results = new Results();
-
-	private static Results FindGasPrice(int zipcode, String city){
+	public Results FindGasPrice(int zipcode, String city){
+		Results results = new Results();
 	    Document doc;
 	    try {
 	        doc = Jsoup.connect("http://www.autoblog.com/" + zipcode + "-gas-prices/").get();
@@ -144,5 +143,30 @@ public class Queryable {
 	        e.printStackTrace();
 	    }
 	    return results;
+	}
+	
+	public Results initialQuery(Location location){
+		Results googleResults = nearbyGoogleStations(location);
+		GasQueryInput input = gasPriceQueryInfo(location);
+		Results priceResults = FindGasPrice(input.getZipCode(), input.getCity());
+		Results finalResults = new Results();
+		Station googleResult;
+		Station priceResult;
+		int googleSize = googleResults.size();
+		int priceSize = priceResults.size();
+		
+		for(int i = 0; i < googleSize; i++){
+			googleResult = googleResults.getStation(i);
+			for(int j = 0; j < priceSize; j++){
+				priceResult = priceResults.getStation(i);
+				if(googleResult.getAddress().equals(priceResult.getAddress())){
+					googleResults.getStation(i).setPrice(priceResults.getStation(j).getPrice());
+					finalResults.addStation(googleResult);
+					break;
+				}
+			}
+		}
+		
+		return finalResults;
 	}
 }
