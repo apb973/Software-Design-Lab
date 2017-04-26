@@ -59,6 +59,6 @@ public class Station {
 	}
 	
 	public void setAddress(String str){
-		name = str;
+		address = str;
 	}
 }
