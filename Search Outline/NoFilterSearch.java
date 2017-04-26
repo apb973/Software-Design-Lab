@@ -1,5 +1,5 @@
 
-public class NoFilterSearch implements Searchable{
+public class NoFilterSearch extends Queryable implements Searchable{
 	
 	private int radius = 5;
 	
