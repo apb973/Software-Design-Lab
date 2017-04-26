@@ -1,8 +1,8 @@
 	    public class GasQueryInput{
-	    	private String zipCode;
+	    	private int zipCode;
 	    	private String city;
 	    	
-	    	public void setZipCode(String postalCode){
+	    	public void setZipCode(int postalCode){
 	    		zipCode = postalCode;
 	    	}
 	    	
@@ -10,7 +10,7 @@
 	    		city = town;
 	    	}
 	    	
-	    	public String getZipCode(){
+	    	public int getZipCode(){
 	    		return zipCode;
 	    	}
 	    	
