@@ -15,8 +15,8 @@ public class Results {
 		results.add(station);
 	}
 	
-	public void removeStation(Station station){
-		results.remove(station);
+	public void removeStation(int i){
+		results.remove(i);
 	}
 	
 	public int size(){
