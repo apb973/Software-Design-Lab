@@ -158,9 +158,9 @@ public class Queryable {
 		for(int i = 0; i < googleSize; i++){
 			googleResult = googleResults.getStation(i);
 			for(int j = 0; j < priceSize; j++){
-				priceResult = priceResults.getStation(i);
+				priceResult = priceResults.getStation(j);
 				if(googleResult.getAddress().equals(priceResult.getAddress())){
-					googleResults.getStation(i).setPrice(priceResults.getStation(j).getPrice());
+					googleResult.setPrice(priceResult.getPrice());
 					finalResults.addStation(googleResult);
 					break;
 				}
