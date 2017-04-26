@@ -1,26 +1,28 @@
 
 public class NoFilterSearch extends Queryable implements Searchable{
 	
-	private int radius = 5;
 	
 	public Results search(Location location){
-		Results results;
+		Results finalResults = initialQuery(location);
+		Station finalResult;
+		int finalSize = finalResults.size();
 		
-		do{
-			radius += 5;
-			results = googleStationSearch(location, radius); //if we store stations and their info in a database,
-		}while(results.size() == 10);							//can do database search first, then google search if not enough found
-		radius = 5;
+		for(int i = 5; i < finalSize; i++){
+			finalResults.removeStation(i);
+		}
 		
-		//if we store stations and their info in a database, can get rid of set functions
-		setStationPrices(results);
-		setRestaurants(results);
-		
-		sort(results);
-		return results;
+		finalSize = finalResults.size();
+		for(int i = 0; i < finalSize; i++){
+			finalResult = finalResults.getStation(i);
+			finalResult.setRestaurants(googleRestaurants(finalResult.getLocation()));
+		}
+		return finalResults;
 	}
 	
 	public Results sort(Results results){
+		//put closest station first
+		
+		//should already be in order
 		return results;
 	}
 }
