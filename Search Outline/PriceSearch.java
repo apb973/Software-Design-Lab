@@ -1,5 +1,5 @@
 
-public class PriceSearch implements Searchable {
+public class PriceSearch extends Queryable implements Searchable {
 	
 	private int radius = 5;
 	
