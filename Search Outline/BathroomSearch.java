@@ -1,5 +1,5 @@
 
-public class BathroomSearch implements Searchable{
+public class BathroomSearch extends Queryable implements Searchable{
 	
 	private int radius = 5;
 	
