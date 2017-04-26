@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GoogleMapsRetrofit</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_options">OptionsActivity</string>
+</resources>
