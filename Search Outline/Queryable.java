@@ -25,10 +25,15 @@ public class Queryable {
 
             	String placeholder = addrElements.get(i).text();
             	placeholder = placeholder.replaceAll(",.*$" , "");
-            	placeholder = placeholder.replaceAll(" N " , "North");
-            	placeholder = placeholder.replaceAll(" W " , "West");
-            	placeholder = placeholder.replaceAll(" S " , "South");
-            	placeholder = placeholder.replaceAll(" E " , "East");
+            	placeholder = placeholder.replaceAll(" Blvd$", " Boulevard");
+            	placeholder = placeholder.replaceAll(" Rd$", " Road");
+            	placeholder = placeholder.replaceAll(" St$", " Street");
+            	placeholder = placeholder.replaceAll(" Pkwy$", " Parkway");
+				
+            	placeholder = placeholder.replaceAll(" N " , " North ");
+            	placeholder = placeholder.replaceAll(" W " , " West ");
+            	placeholder = placeholder.replaceAll(" S " , " South ");
+            	placeholder = placeholder.replaceAll(" E " , " East ");
             	toAdd.setAddress(placeholder);
             	toAdd.setName(nameElements.get(i).text());
             	names.addStation(toAdd);
@@ -128,14 +133,18 @@ public class Queryable {
 	                    			for (int k = 1; k<11; k++){
 	                    				parsingArray[k] = parsingArray[k].replaceAll(",.*$" , "");
 	                    				parsingArray[k] = parsingArray[k].replaceAll(" " + city, "");
-	                    				parsingArray[k] = parsingArray[k].replaceAll("Blvd", "Boulevard");
-	                    				parsingArray[k] = parsingArray[k].replaceAll("Rd", "Road");
-	                    				parsingArray[k] = parsingArray[k].replaceAll("St", "Street");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" Blvd", " Boulevard");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" Rd", " Road");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" St", " Street");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" Fwy", " Freeway");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" Ave", " Avenue");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" Cir", " Circle");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" Expy", " Expressway");
+	                    				parsingArray[k] = parsingArray[k].replaceAll(" Pkwy", " Parkway");
 	                    				parsingArray[k] = parsingArray[k].replaceAll(" N " , " North ");
 	                    				parsingArray[k] = parsingArray[k].replaceAll(" W " , " West ");
 	                    				parsingArray[k] = parsingArray[k].replaceAll(" S " , " South ");
 	                    				parsingArray[k] = parsingArray[k].replaceAll(" E " , " East ");
-	                    				
 	                    				}                        			
 	                    			for (int k = 1; k<11; k++) {
 	                    				//System.out.println(parsingArray[k]);
@@ -168,15 +177,15 @@ public class Queryable {
 		
 		
 		Results priceResults = FindGasPrice(input.getZipCode(), input.getCity());
-	/*	
+/*	
 		System.out.println(input.getZipCode() + " " + input.getCity());
 		for(int w = 0; w < priceResults.size(); w++){
 			System.out.println(priceResults.getStation(w).getAddress());
 		}
 		for(int w = 0; w < googleResults.size(); w++){
 			System.out.println(googleResults.getStation(w).getAddress());
-		}*/
-		
+		}
+*/		
 		Results finalResults = new Results();
 		Station googleResult;
 		Station priceResult;
@@ -194,7 +203,7 @@ public class Queryable {
 				}
 			}
 		}
-		/*
+/*		
 		System.out.println(finalResults.size());
 		for(int w = 0; w < finalResults.size(); w++){
 			System.out.println(finalResults.getStation(w).getAddress());
