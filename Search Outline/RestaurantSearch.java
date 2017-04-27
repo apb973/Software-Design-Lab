@@ -1,31 +1,23 @@
 
 public class RestaurantSearch extends Queryable implements Searchable{
 	
-	private int radius = 5;
-	
 	public Results search(Location location){
-		Results results;
-		boolean allHaveRestaurants;
+		Results finalResults = initialQuery(location);
+		Station finalResult;
+		int finalSize = finalResults.size();
 		
-		do{
-			allHaveRestaurants = true;
-			radius += 5;
-			results = googleStationSearch(location, radius);			//if we store stations and their info in a database,
-			for(int i = 0; i < results.size(); i++){						//can do database search first, then google search if not enough found
-				if(results.getStation(i).getBathroomRating() == null){
-					allHaveRestaurants = false;
-					break;
-				}
-			}
-		}while(!allHaveRestaurants && results.size() == 10);
-		radius = 5;
+		for(int i = 0; i < finalSize; i++){
+			finalResult = finalResults.getStation(i);
+			finalResult.setRestaurants(googleRestaurants(finalResult.getLocation()));
+		}
 		
-		//if we store stations and their info in a database, can get rid of set functions
-		setStationPrices(results);
-		setRestaurants(results);
+		finalResults = sort(finalResults);
 		
-		results = sort(results);
-		return results;
+		for(int i = 5; i < finalSize; i++){
+			finalResults.removeStation(i);
+		}
+		
+		return finalResults;
 	}
 	
 	public Results sort(Results results){
@@ -43,5 +35,5 @@ public class RestaurantSearch extends Queryable implements Searchable{
 			results.removeStation(next);
 		}
 		return sorted;
-	} 
+	}
 }
