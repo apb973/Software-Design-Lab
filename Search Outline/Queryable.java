@@ -30,7 +30,6 @@ public class Queryable {
             e.printStackTrace();
         }
         return names;
-
     }
     
     private String fixAbbreviations(String abbreviated){
@@ -167,15 +166,17 @@ public class Queryable {
 		Station googleResult;
 		Station priceResult;
 		int googleSize = googleResults.size();
-		int priceSize = priceResults.size();
+		int priceSize;
 		
 		for(int i = 0; i < googleSize; i++){
 			googleResult = googleResults.getStation(i);
+			priceSize = priceResults.size();
 			for(int j = 0; j < priceSize; j++){
 				priceResult = priceResults.getStation(j);
 				if(googleResult.getAddress().equals(priceResult.getAddress())){
 					googleResults.getStation(i).setPrice(priceResults.getStation(j).getPrice());
 					finalResults.addStation(googleResult);
+					priceResults.removeStation(priceResult);
 					break;
 				}
 			}
