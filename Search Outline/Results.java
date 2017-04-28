@@ -25,5 +25,22 @@ public class Results {
 	
 	public int size(){
 		return results.size();
-	}	
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(!this.getClass().equals(other.getClass())){
+			return false;
+		}
+		int size = results.size();
+		if(size != ((Results) other).size()){
+			return false;
+		}
+		for(int i = 0; i < size; size++){
+			if(!results.get(i).equals(((Results) other).getStation(i))){
+				return false;
+			}
+		}
+		return true;
+	}
 }
