@@ -36,7 +36,7 @@ public class Results {
 		if(size != ((Results) other).size()){
 			return false;
 		}
-		for(int i = 0; i < size; size++){
+		for(int i = 0; i < size; i++){
 			if(!results.get(i).equals(((Results) other).getStation(i))){
 				return false;
 			}
