@@ -1,4 +1,3 @@
-
 public class Station {
 	private Bathroom bathroom;
 	private Restaurants restaurants;
@@ -8,10 +7,12 @@ public class Station {
 	private String address;
 	
 	public Station(){
-		bathroom = null;
-		restaurants = null;
+		bathroom = new Bathroom();
+		restaurants = new Restaurants();
 		price = 0;
-		location = null;
+		location = new Location();
+		name = "";
+		address = "";
 	}
 	
 	public Bathroom getBathroom(){
@@ -60,5 +61,14 @@ public class Station {
 	
 	public void setAddress(String str){
 		address = str;
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(!this.getClass().equals(other.getClass())){
+			return false;
+		}
+		return restaurants.equals(((Station) other).getRestaurants()) && name.equals(((Station) other).getName()) && location.equals(((Station) other).getLocation())
+				&& price == ((Station) other).getPrice() && bathroom.equals(((Station) other).getBathroom());
 	}
 }
