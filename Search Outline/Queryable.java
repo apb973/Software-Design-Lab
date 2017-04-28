@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -26,8 +24,8 @@ public class Queryable {
             	toAdd.setName(nameElements.get(i).text());
             	names.addStation(toAdd);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return new Results();
         }
         return names;
     }
@@ -68,8 +66,8 @@ public class Queryable {
 	            	return toAdd;
             	}
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+        	return new Station();
         }
         return new Station();
     }
@@ -89,8 +87,8 @@ public class Queryable {
             String[] cityPassOne = zipCodeElements.get(0).text().split("y\">");
             String[] cityPassTwo = cityPassOne[1].split("<");
             toReturn.setCity(cityPassTwo[0]);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return new GasQueryInput();
         }
         return toReturn;
     }
@@ -104,11 +102,11 @@ public class Queryable {
 	            names = new Restaurants();
 	            int size = nameElements.size();
 	            
-	            for (int i = 0; ((i < size) || (i < 5)); i++) {
+	            for (int i = 0; ((i < size) && (i < 5)); i++) {
 	            	names.addRestaurant(nameElements.get(i).text());
 	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
+	        } catch (Exception e) {
+	            return new Restaurants();
 	        }
 	        return names;
     }
@@ -152,13 +150,16 @@ public class Queryable {
 	        		counter2++;
 	        	}
 	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
+	    } catch (Exception e) {
+	        return new Results();
 	    }
 	    return results;
 	}
 	
 	public Results initialQuery(Location location){
+		if(location == null){
+			throw(new NullPointerException());
+		}
 		Results googleResults = nearbyGoogleStations(location);
 		GasQueryInput input = gasPriceQueryInfo(location);
 		Results priceResults = FindGasPrice(input.getZipCode(), input.getCity());
