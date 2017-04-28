@@ -32,7 +32,7 @@ public class Restaurants {
 		if(size != ((Restaurants) other).size()){
 			return false;
 		}
-		for(int i = 0; i < size; size++){
+		for(int i = 0; i < size; i++){
 			if(!restaurantNames.get(i).equals(((Restaurants) other).getRestaurant(i))){
 				return false;
 			}
