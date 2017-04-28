@@ -16,7 +16,6 @@ public class SortedStationsTest {
     /***************************************************/
     @Test
     public void testSortedResultsForPrice(){
-    	System.out.println("Hello");
     	
         /* Initializing */
         PriceSearch getStationsFromLocation = new PriceSearch();
@@ -24,21 +23,12 @@ public class SortedStationsTest {
         location.setLattitude(30.2948248);   /* arbitrary location */
         location.setLongitude(-97.7422602);
         
-        System.out.println("Hello");
         
         /* Get expectedResults and actualResults */
         Results unsortedResults;
         Results actualResults, expectedResults;
-        
-        
+       
         unsortedResults = getStationsFromLocation.search(location);
-        
-        
-        System.out.println("Hello");
-        for(int i = 0; i < unsortedResults.size(); i++) {
-        	System.out.println(unsortedResults.getStation(i).getPrice());
-        	
-        }
         
         expectedResults = merge_sort_price(unsortedResults);
         actualResults = getStationsFromLocation.sort(unsortedResults);
@@ -138,7 +128,7 @@ public class SortedStationsTest {
             int r = 0;
             /* Merge the left and right ArrayList to result */
             while (left.size() != l && right.size() != r) {
-                if (left.getStation(l).getPrice() < right.getStation(r).getPrice()) {
+                if (left.getStation(l).getPrice() <= right.getStation(r).getPrice()) {
                     result.addStation(left.getStation(l));
                     l++;
                 } else {
@@ -202,7 +192,7 @@ public class SortedStationsTest {
             int r = 0;
             /* Merge the left and right ArrayList to result */
             while (left.size() != l && right.size() != r) {
-                if (left.getStation(l).getBathroom().getRating() < right.getStation(r).getBathroom().getRating()) {
+                if (left.getStation(l).getBathroom().getRating() <= right.getStation(r).getBathroom().getRating()) {
                     result.addStation(left.getStation(l));
                     l++;
                 } else {
@@ -266,7 +256,7 @@ public class SortedStationsTest {
             int r = 0;
             /* Merge the left and right ArrayList to result */
             while (left.size() != l && right.size() != r) {
-                if (left.getStation(l).getRestaurants().size() > right.getStation(r).getRestaurants().size()) {
+                if (left.getStation(l).getRestaurants().size() >= right.getStation(r).getRestaurants().size()) {
                     result.addStation(left.getStation(l));
                     l++;
                 } else {
