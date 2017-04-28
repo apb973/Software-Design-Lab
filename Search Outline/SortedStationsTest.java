@@ -26,7 +26,7 @@ public class SortedStationsTest {
         Results unsortedResults;
         Results actualResults, expectedResults;
         
-        unsortedResults = getStationsFromLocation.search(Location);
+        unsortedResults = getStationsFromLocation.search(location);
         
         expectedResults = merge_sort_price(unsortedResults);
         actualResults = getStationsFromLocation.sort(unsortedResults);
@@ -51,7 +51,7 @@ public class SortedStationsTest {
         Results unsortedResults;
         Results actualResults, expectedResults;
         
-        unsortedResults = getStationsFromLocation.search(Location);
+        unsortedResults = getStationsFromLocation.search(location);
         
         expectedResults = merge_sort_bathroom(unsortedResults);
         actualResults = getStationsFromLocation.sort(unsortedResults);
