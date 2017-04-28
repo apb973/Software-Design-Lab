@@ -58,7 +58,7 @@ public class Queryable {
             int size = nameElements.size();
             
             for (int i = 0; i < size; i++) {
-            	if(address.equals(addrElements.get(i).text())){
+            	if(address.equalsIgnoreCase(addrElements.get(i).text())){
 	            	Station toAdd = new Station();
 	            	toAdd.setLocation(new Location(Double.parseDouble(latElements.get(i).text()), Double.parseDouble(longElements.get(i).text())));
 	            	toAdd.setAddress(addrElements.get(i).text());
@@ -174,7 +174,7 @@ public class Queryable {
 			priceSize = priceResults.size();
 			for(int j = 0; j < priceSize; j++){
 				priceResult = priceResults.getStation(j);
-				if(googleResult.getAddress().equals(priceResult.getAddress())){
+				if(googleResult.getAddress().equalsIgnoreCase(priceResult.getAddress())){
 					googleResults.getStation(i).setPrice(priceResults.getStation(j).getPrice());
 					finalResults.addStation(googleResult);
 					priceResults.removeStation(priceResult);
