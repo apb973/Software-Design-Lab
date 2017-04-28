@@ -30,4 +30,12 @@ public class Location {
 	public void setLongitude(double lon){
 		longitude = lon;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(!this.getClass().equals(other.getClass())){
+			return false;
+		}
+		return lattitude == ((Location) other).getLattitude() && longitude == ((Location) other).getLongitude();
+	}
 }
