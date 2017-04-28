@@ -248,8 +248,8 @@ public class SortedStationsTest {
             
             
             /* Use the method recursively */
-            left = merge_sort_price(left);
-            right = merge_sort_price(right);
+            left = merge_sort_restaurant(left);
+            right = merge_sort_restaurant(right);
             
             
             int l = 0;
