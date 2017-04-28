@@ -102,7 +102,7 @@ public class Queryable {
 	            names = new Restaurants();
 	            int size = nameElements.size();
 	            
-	            for (int i = 0; ((i < size) && (i < 5)); i++) {
+	            for (int i = 0; ((i < size)); i++) {
 	            	names.addRestaurant(nameElements.get(i).text());
 	            }
 	        } catch (Exception e) {
