@@ -1,3 +1,4 @@
+import java.io.IOException; 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -24,10 +25,11 @@ public class Queryable {
             	toAdd.setName(nameElements.get(i).text());
             	names.addStation(toAdd);
             }
-        } catch (Exception e) {
-            return new Results();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return names;
+
     }
     
     private String fixAbbreviations(String abbreviated){
@@ -58,7 +60,7 @@ public class Queryable {
             int size = nameElements.size();
             
             for (int i = 0; i < size; i++) {
-            	if(address.equalsIgnoreCase(addrElements.get(i).text())){
+            	if(address.equals(addrElements.get(i).text())){
 	            	Station toAdd = new Station();
 	            	toAdd.setLocation(new Location(Double.parseDouble(latElements.get(i).text()), Double.parseDouble(longElements.get(i).text())));
 	            	toAdd.setAddress(addrElements.get(i).text());
@@ -66,8 +68,8 @@ public class Queryable {
 	            	return toAdd;
             	}
             }
-        } catch (Exception e) {
-        	return new Station();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return new Station();
     }
@@ -87,8 +89,8 @@ public class Queryable {
             String[] cityPassOne = zipCodeElements.get(0).text().split("y\">");
             String[] cityPassTwo = cityPassOne[1].split("<");
             toReturn.setCity(cityPassTwo[0]);
-        } catch (Exception e) {
-            return new GasQueryInput();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return toReturn;
     }
@@ -102,11 +104,11 @@ public class Queryable {
 	            names = new Restaurants();
 	            int size = nameElements.size();
 	            
-	            for (int i = 0; ((i < size)); i++) {
+	            for (int i = 0; ((i < size) && (i < 5)); i++) {
 	            	names.addRestaurant(nameElements.get(i).text());
 	            }
-	        } catch (Exception e) {
-	            return new Restaurants();
+	        } catch (IOException e) {
+	            e.printStackTrace();
 	        }
 	        return names;
     }
@@ -150,16 +152,13 @@ public class Queryable {
 	        		counter2++;
 	        	}
 	        }
-	    } catch (Exception e) {
-	        return new Results();
+	    } catch (IOException e) {
+	        e.printStackTrace();
 	    }
 	    return results;
 	}
 	
 	public Results initialQuery(Location location){
-		if(location == null){
-			throw(new NullPointerException());
-		}
 		Results googleResults = nearbyGoogleStations(location);
 		GasQueryInput input = gasPriceQueryInfo(location);
 		Results priceResults = FindGasPrice(input.getZipCode(), input.getCity());
@@ -167,17 +166,15 @@ public class Queryable {
 		Station googleResult;
 		Station priceResult;
 		int googleSize = googleResults.size();
-		int priceSize;
+		int priceSize = priceResults.size();
 		
 		for(int i = 0; i < googleSize; i++){
 			googleResult = googleResults.getStation(i);
-			priceSize = priceResults.size();
 			for(int j = 0; j < priceSize; j++){
 				priceResult = priceResults.getStation(j);
-				if(googleResult.getAddress().equalsIgnoreCase(priceResult.getAddress())){
+				if(googleResult.getAddress().equals(priceResult.getAddress())){
 					googleResults.getStation(i).setPrice(priceResults.getStation(j).getPrice());
 					finalResults.addStation(googleResult);
-					priceResults.removeStation(priceResult);
 					break;
 				}
 			}
