@@ -18,5 +18,13 @@ public class Bathroom{
 		rating = (rating * rates + rate) / (rates + 1);
 		rates++;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(!this.getClass().equals(other.getClass())){
+			return false;
+		}
+		return rating == ((Bathroom) other).getRating();
+	}
 
 }

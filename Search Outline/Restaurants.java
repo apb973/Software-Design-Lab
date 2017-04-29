@@ -21,5 +21,22 @@ public class Restaurants {
 	
 	public int size(){
 		return restaurantNames.size();
-	}	
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(!this.getClass().equals(other.getClass())){
+			return false;
+		}
+		int size = restaurantNames.size();
+		if(size != ((Restaurants) other).size()){
+			return false;
+		}
+		for(int i = 0; i < size; i++){
+			if(!restaurantNames.get(i).equals(((Restaurants) other).getRestaurant(i))){
+				return false;
+			}
+		}
+		return true;
+	}
 }
