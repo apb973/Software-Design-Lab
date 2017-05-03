@@ -1,5 +1,6 @@
 package com.androidtutorialpoint.googlemapsretrofit;
 
+
 public class RestaurantSearch extends Queryable implements Searchable{
 	
 	public Results search(Location location){
@@ -9,7 +10,7 @@ public class RestaurantSearch extends Queryable implements Searchable{
 		
 		for(int i = 0; i < finalSize; i++){
 			finalResult = finalResults.getStation(i);
-			finalResult.setRestaurants(googleRestaurants(finalResult.getLocation()));
+			finalResult.setRestaurants(getRestaurants(finalResult.getLocation()));
 		}
 		
 		finalResults = sort(finalResults);
@@ -38,3 +39,4 @@ public class RestaurantSearch extends Queryable implements Searchable{
 		return sorted;
 	}
 }
+
