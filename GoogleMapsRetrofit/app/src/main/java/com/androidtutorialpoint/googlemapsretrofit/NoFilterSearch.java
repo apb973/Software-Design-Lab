@@ -1,7 +1,5 @@
-package com.androidtutorialpoint.googlemapsretrofit;
 
 public class NoFilterSearch extends Queryable implements Searchable{
-	
 	
 	public Results search(Location location){
 		Results finalResults = initialQuery(location);
@@ -15,7 +13,7 @@ public class NoFilterSearch extends Queryable implements Searchable{
 		finalSize = finalResults.size();
 		for(int i = 0; i < finalSize; i++){
 			finalResult = finalResults.getStation(i);
-			finalResult.setRestaurants(googleRestaurants(finalResult.getLocation()));
+			finalResult.setRestaurants(getRestaurants(finalResult.getLocation()));
 		}
 		return finalResults;
 	}
