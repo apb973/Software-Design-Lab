@@ -1,5 +1,6 @@
 package com.androidtutorialpoint.googlemapsretrofit;
 
+
 public class PriceSearch extends Queryable implements Searchable {
 	
 	public Results search(Location location){
@@ -16,7 +17,7 @@ public class PriceSearch extends Queryable implements Searchable {
 		finalSize = finalResults.size();
 		for(int i = 0; i < finalSize; i++){
 			finalResult = finalResults.getStation(i);
-			finalResult.setRestaurants(googleRestaurants(finalResult.getLocation()));
+			finalResult.setRestaurants(getRestaurants(finalResult.getLocation()));
 		}
 		return finalResults;
 	}
@@ -37,3 +38,4 @@ public class PriceSearch extends Queryable implements Searchable {
 		return sorted;
 	}
 }
+
