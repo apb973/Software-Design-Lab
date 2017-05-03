@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class OptionsActivity extends AppCompatActivity implements OnItemSelectedListener
@@ -55,11 +59,20 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-//                Search search = new Search();
-//                search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
-//                search.search();
-//                Results results = search.getResults();
-//                Toast.makeText(OptionsActivity.this, results.results.get(0).toString() , Toast.LENGTH_LONG).show();
+                Search search = new Search();
+                search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
+                search.search();
+                Results results = search.getResults();
+
+                for(int i = 0; i < results.size(); i++)
+                {
+                    Log.d("onCheckBox"," " + results.getStation(i).getName() + "," + results.getStation(i).getAddress());
+                    MapsActivity.mMap.addMarker((new MarkerOptions())
+                            .position( new LatLng(results.getStation(i).getLocation().getLattitude()
+                                    ,results.getStation(i).getLocation().getLongitude()))
+                            .title(results.getStation(i).getName())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                }
 
             }
         }

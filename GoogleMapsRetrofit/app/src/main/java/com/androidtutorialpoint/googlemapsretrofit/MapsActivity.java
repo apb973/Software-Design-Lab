@@ -108,8 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-//        final LatLng PERTH = new LatLng(-31.90, 115.86);
-//        Marker perth = mMap.addMarker(new MarkerOptions().position(PERTH).draggable(true));
+        //Marker perth = mMap.addMarker(new MarkerOptions().position(mCurrLocationMarker.getPosition()).draggable(true));
 
 
         //Initialize Google Play Services
@@ -141,7 +140,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-            String Option = "option";
             @Override
             public void onClick(View v) {
                 Log.d("onClick", "Button is Clicked");
@@ -223,7 +221,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
         Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
