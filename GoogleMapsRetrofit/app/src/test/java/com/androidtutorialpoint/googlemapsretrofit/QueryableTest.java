@@ -18,7 +18,7 @@ public class QueryableTest {
 		stationList = search.nearbyGoogleStations(holder);
 		assertTrue(stationList.size() == 20);
 	}
-	
+
 	@Test
 	public void testNearbyGoogleStationsCorrectness() {
 		Location holder = new Location(30.307182,-97.755996);
@@ -27,8 +27,8 @@ public class QueryableTest {
 		stationList = search.nearbyGoogleStations(holder);
 		ArrayList<String> expected = new ArrayList<String> ();
 		ArrayList<String> actual = new ArrayList<String> ();
-		
-		expected.add("2701 Exposition Boulevard");				
+
+		expected.add("2701 Exposition Boulevard");
 		expected.add("3201 North Lamar Boulevard");
 		expected.add("3201 North Lamar Boulevard");
 		expected.add("3515 North Lamar Boulevard");
@@ -70,7 +70,7 @@ public class QueryableTest {
 		assertTrue(expected.getCity().equals(actual.getCity()));
 		assertTrue(expected.getZipCode() == (actual.getZipCode()));
 	}
-	
+
 	@Test
 	public void testGasPriceQueryInfoCorrectness2() {
 		GasQueryInput expected = new GasQueryInput();
@@ -94,17 +94,17 @@ public class QueryableTest {
 		actual = tester.FindGasPrice(75081, "Richardson");
 
 		assertTrue(actual.size() == 10);
-		
+
 	}
-	
+
 	@Test
 	public void testFindGasPriceRichardson() {
 		Queryable tester = new Queryable();
 		Results actual = new Results();
 		Results expected = new Results();
-		
+
 		actual = tester.FindGasPrice(75081, "Richardson");
-		
+
 		Station gasStation = new Station();
 		gasStation.setAddress("536 Centennial Blvd");
 		gasStation.setPrice(2.209);
@@ -136,18 +136,18 @@ public class QueryableTest {
 		gasStation.setAddress("2150 E Belt Line Rd");
 		gasStation.setPrice(2.399);
 		expected.addStation(gasStation);
-		
+
 		expected.equals(actual);
 	}
-	
+
 	@Test
 	public void testFindGasPriceAustin() {
 		Queryable tester = new Queryable();
 		Results actual = new Results();
 		Results expected = new Results();
-		
+
 		actual = tester.FindGasPrice(78703, "Austin");
-		
+
 		Station gasStation = new Station();
 		expected.addStation(new Station(2.729, "2701 Exposition Boulevard"));
 		expected.addStation(new Station(2.539, "2620 Lake Boulevard"));
@@ -156,7 +156,7 @@ public class QueryableTest {
 		expected.addStation(new Station(2.269, "2400 Rio Grande Street"));
 		expected.addStation(new Station(2.599, "1200 North Lamar Boulevard"));
 		expected.addStation(new Station(2.199, "2819 Guadalupe Street"));
-		
+
 		expected.addStation(new Station(2.499, "2600 Guadalupe Street"));
 		expected.addStation(new Station(2.679, "917 North Lamar Boulevard"));
 		expected.addStation(new Station(2.529, "1814 Guadalupe Street"));
@@ -167,7 +167,7 @@ public class QueryableTest {
 			System.out.println(expected.getStation(i).getPrice() + " " + actual.getStation(i).getPrice());
 			assertTrue(expected.getStation(i).getAddress().equals(actual.getStation(i).getAddress()));
 			assertTrue(expected.getStation(i).getPrice() == actual.getStation(i).getPrice());
-			
+
 		}
 	}
 
@@ -194,13 +194,13 @@ public class QueryableTest {
 			//System.out.println(expected.getStation(i).getPrice() + " " + actual.getStation(i).getPrice());
 			assertTrue(expected.getStation(i).getAddress().equals(actual.getStation(i).getAddress()));
 			assertTrue(expected.getStation(i).getPrice() == actual.getStation(i).getPrice());
-			
+
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	@Test
 	public void testabbreviations() {
 		Queryable tester = new Queryable();
@@ -208,18 +208,18 @@ public class QueryableTest {
 		String rd = " W Rd";
 		String st = " S St";
 		String pkwy = " E Pkwy";
-		
-				
+
+
 		blvd = tester.fixAbbreviations(blvd);
 		rd = tester.fixAbbreviations(rd);
 		st = tester.fixAbbreviations(st);
 		pkwy = tester.fixAbbreviations(pkwy);
-		
+
 		assertTrue(blvd.equals(" North Boulevard"));
 		assertTrue(rd.equals(" West Road"));
 		assertTrue(st.equals(" South Street"));
 		assertTrue(pkwy.equals(" East Parkway"));
-		
+
 	}
 
 

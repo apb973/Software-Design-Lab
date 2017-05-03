@@ -2,6 +2,7 @@ package com.androidtutorialpoint.googlemapsretrofit;
 
 public class NoFilterSearch extends Queryable implements Searchable{
 	
+	
 	public Results search(Location location){
 		Results finalResults = initialQuery(location);
 		Station finalResult;
