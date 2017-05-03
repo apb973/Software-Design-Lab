@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.google.android.gms.common.api.Result;
 import com.google.android.gms.maps.GoogleMap;
 
 
@@ -54,7 +55,12 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                Toast.makeText(OptionsActivity.this, "Selected: Gas Price" , Toast.LENGTH_LONG).show();
+//                Search search = new Search();
+//                search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
+//                search.search();
+//                Results results = search.getResults();
+//                Toast.makeText(OptionsActivity.this, results.results.get(0).toString() , Toast.LENGTH_LONG).show();
+
             }
         }
         );

@@ -3,8 +3,8 @@ package com.androidtutorialpoint.googlemapsretrofit;
 import java.util.ArrayList;
 
 public class Results {
-	private ArrayList<Station> results;
-	
+	public ArrayList<Station> results;
+
 	public Results(){
 		results = new ArrayList<Station>();
 	}

@@ -35,7 +35,8 @@ public class Search {
 			break;
 		}
 	}
-	
+
+	//list of gas stations
 	public Results getResults(){
 		return results;
 	}
@@ -43,7 +44,8 @@ public class Search {
 	public void setLocation(Location loc){
 		location = loc;
 	}
-	
+
+	// long and lat
 	public Location getLocation(){
 		return location;
 	}

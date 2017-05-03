@@ -43,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double longitude;
     private int PROXIMITY_RADIUS = 10000;
     GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
+    static public Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     EditText editText;
@@ -107,6 +107,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+//        final LatLng PERTH = new LatLng(-31.90, 115.86);
+//        Marker perth = mMap.addMarker(new MarkerOptions().position(PERTH).draggable(true));
+
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

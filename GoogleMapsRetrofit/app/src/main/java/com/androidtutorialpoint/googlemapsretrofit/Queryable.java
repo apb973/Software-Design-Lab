@@ -11,8 +11,9 @@ public class Queryable {
         Document doc;
         Results names = new Results();
         try {
-            doc = Jsoup.connect("https://maps.googleapis.com/maps/api/place/nearbysearch/xml?location=" + location.getLattitude() + ",+" + location.getLongitude() + "&rankby=distance&type=gas_station&key=AIzaSyDvb8h33wTteNR1NbHN9f0m1Y2HfgdwkwU").get();
-            Elements nameElements = doc.select("name");
+           // doc = Jsoup.connect("https://maps.googleapis.com/maps/api/place/nearbysearch/xml?location=" + location.getLattitude() + ",+" + location.getLongitude() + "&rankby=distance&type=gas_station&key=AIzaSyDvb8h33wTteNR1NbHN9f0m1Y2HfgdwkwU").get();
+			doc = Jsoup.connect("https://www.google.com").get();
+			Elements nameElements = doc.select("name");
             Elements locElements = doc.select("location");
             Elements latElements = locElements.select("lat");
             Elements longElements = locElements.select("lng");
