@@ -21,7 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 public class OptionsActivity extends AppCompatActivity implements OnItemSelectedListener
 {
     Spinner spinner;
-    CheckBox gasPriceCB,restCB,distCB,bathCB;
+    CheckBox gasPriceCB,restCB,distCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +73,6 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 Toast.makeText(OptionsActivity.this, "Selected: Distance" , Toast.LENGTH_LONG).show();
-            }}
-        );
-        //CheckBox
-        bathCB = (CheckBox) findViewById(R.id.CheckBoxBath);
-        bathCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                Toast.makeText(OptionsActivity.this, "Selected: Bathroom" , Toast.LENGTH_LONG).show();
             }}
         );
 }
