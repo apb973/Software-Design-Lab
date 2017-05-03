@@ -17,7 +17,7 @@ public class PriceSearch extends Queryable implements Searchable {
 		finalSize = finalResults.size();
 		for(int i = 0; i < finalSize; i++){
 			finalResult = finalResults.getStation(i);
-			finalResult.setRestaurants(getRestaurants(finalResult.getLocation()));
+			finalResult.setRestaurants(googleRestaurants(finalResult.getLocation()));
 		}
 		return finalResults;
 	}
