@@ -161,7 +161,6 @@ public class QueryableTest {
 		expected.addStation(new Station(2.679, "917 North Lamar Boulevard"));
 		expected.addStation(new Station(2.529, "1814 Guadalupe Street"));
 
-		
 		expected.equals(actual);
 		for(int i = 0; i < expected.size(); i++){
 			System.out.println(expected.getStation(i).getAddress() + " " + actual.getStation(i).getAddress());
@@ -179,9 +178,6 @@ public class QueryableTest {
 		Results expected = new Results();
 		Results actual = new Results();
 		Station gasStation = new Station();
-		
-
-
 
 		actual.addStation(new Station(2.199, "522 West Belt Line Road"));
 		actual.addStation(new Station(2.399, "236 East Spring Valley Road"));
@@ -191,9 +187,6 @@ public class QueryableTest {
 		actual.addStation(new Station(2.579, "540 Centennial Boulevard"));
 		actual.addStation(new Station(2.579, "540 Centennial Boulevard"));
 
-
-
-		
 		expected = tester.initialQuery(holder);
 		assertTrue(expected.size() == 7);
 		for(int i = 0; i < expected.size(); i++){

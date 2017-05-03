@@ -32,7 +32,7 @@ public class Queryable {
         return names;
     }
     
-    private String fixAbbreviations(String abbreviated){
+    public String fixAbbreviations(String abbreviated){
     	abbreviated = abbreviated.replaceAll(",.*$" , "");
     	abbreviated = abbreviated.replaceAll(" Blvd$", " Boulevard");
     	abbreviated = abbreviated.replaceAll(" Rd$", " Road");

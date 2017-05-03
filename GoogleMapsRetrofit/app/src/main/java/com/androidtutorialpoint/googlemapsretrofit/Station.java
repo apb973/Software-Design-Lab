@@ -14,7 +14,15 @@ public class Station {
 		name = "";
 		address = "";
 	}
-	
+
+	public Station(double price, String address) {
+		restaurants = new Restaurants();
+		this.price = price;
+		location = new Location();
+		name = "";
+		this.address = address;
+	}
+
 	public String getName(){
 		return name;
 	}
