@@ -28,8 +28,7 @@ public class Queryable {
 		Results names = new Results();
 		Query query = new Query();
 		try {
-			String [] urls = {"https://maps.googleapis.com/maps/api/place/nearbysearch/xml?location=" + location.getLattitude() + ",+" + location.getLongitude() + "&rankby=distance&type=gas_station&key=AIzaSyDvb8h33wTteNR1NbHN9f0m1Y2HfgdwkwU"};
-			doc = query.execute(urls).get();
+			doc = query.execute("https://maps.googleapis.com/maps/api/place/nearbysearch/xml?location=" + location.getLattitude() + ",+" + location.getLongitude() + "&rankby=distance&type=gas_station&key=AIzaSyDvb8h33wTteNR1NbHN9f0m1Y2HfgdwkwU").get();
 			Elements nameElements = doc.select("name");
 			Elements locElements = doc.select("location");
 			Elements latElements = locElements.select("lat");
