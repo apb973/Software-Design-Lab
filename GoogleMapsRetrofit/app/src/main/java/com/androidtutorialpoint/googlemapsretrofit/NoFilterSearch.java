@@ -1,3 +1,4 @@
+package com.androidtutorialpoint.googlemapsretrofit;
 
 public class NoFilterSearch extends Queryable implements Searchable{
 	
