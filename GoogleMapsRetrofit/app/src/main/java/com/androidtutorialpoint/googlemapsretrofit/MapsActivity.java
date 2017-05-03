@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -44,6 +46,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+    EditText editText;
+    Button btnGo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +68,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
+        editText = (EditText) findViewById(R.id.editText);
+        btnGo = (Button) findViewById(R.id.button);
+        btnGo.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                Toast.makeText(MapsActivity.this, "Selected: Enter" , Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private boolean CheckGooglePlayServices() {
@@ -75,8 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int result = googleAPI.isGooglePlayServicesAvailable(this);
         if(result != ConnectionResult.SUCCESS) {
             if(googleAPI.isUserResolvableError(result)) {
-                googleAPI.getErrorDialog(this, result,
-                        0).show();
+                googleAPI.getErrorDialog(this, result, 0).show();
             }
             return false;
         }

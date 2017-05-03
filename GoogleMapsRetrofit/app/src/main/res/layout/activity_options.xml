@@ -37,32 +37,37 @@
             tools:layout_editor_absoluteX="34dp">
 
             <TextView
-                android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Search Options"
                 android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/CheckBoxGP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CheckBox" />
+                android:text="Gas Prices" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/CheckBoxDist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CheckBox" />
+                android:text="Distance" />
 
-            <TextView
-                android:id="@+id/textView3"
+            <CheckBox
+                android:id="@+id/CheckBoxRest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+                android:text="Restaurant" />
+
+            <CheckBox
+                android:id="@+id/CheckBoxBath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bathroom" />
+
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Map Options"

@@ -30,7 +30,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value=" AIzaSyB3dT2-p46YN9RyDZCaXwsuoWX-3L9Scqg " />
 
         <activity
             android:name=".MapsActivity"
@@ -44,7 +44,7 @@
         <activity
             android:name=".OptionsActivity"
             android:label="@string/title_activity_options"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

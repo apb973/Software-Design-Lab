@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -16,7 +18,10 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.google.android.gms.maps.GoogleMap;
 
 
-public class OptionsActivity extends AppCompatActivity implements OnItemSelectedListener{
+public class OptionsActivity extends AppCompatActivity implements OnItemSelectedListener
+{
+    Spinner spinner;
+    CheckBox gasPriceCB,restCB,distCB,bathCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +31,9 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
         setSupportActionBar(toolbar);
 
         // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
+        spinner = (Spinner) findViewById(R.id.spinner);
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
-
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("Normal");
@@ -38,16 +41,49 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
         categories.add("Satellite");
         categories.add("Terrain");
         categories.add("None");
-
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-    }
+
+        //CheckBox
+        gasPriceCB = (CheckBox) findViewById(R.id.CheckBoxGP);
+        gasPriceCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                Toast.makeText(OptionsActivity.this, "Selected: Gas Price" , Toast.LENGTH_LONG).show();
+            }
+        }
+        );
+        //CheckBox
+        restCB = (CheckBox) findViewById(R.id.CheckBoxRest);
+        restCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                Toast.makeText(OptionsActivity.this, "Selected: Restaurant" , Toast.LENGTH_LONG).show();
+            }}
+        );
+
+        //CheckBox
+        distCB = (CheckBox) findViewById(R.id.CheckBoxDist);
+        distCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                Toast.makeText(OptionsActivity.this, "Selected: Distance" , Toast.LENGTH_LONG).show();
+            }}
+        );
+        //CheckBox
+        bathCB = (CheckBox) findViewById(R.id.CheckBoxBath);
+        bathCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                Toast.makeText(OptionsActivity.this, "Selected: Bathroom" , Toast.LENGTH_LONG).show();
+            }}
+        );
+}
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
