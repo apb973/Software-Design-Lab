@@ -5,44 +5,6 @@ import org.junit.Test;
 public class EqualsTest {
 
 	@Test
-	public void BathroomEqualsTest() {
-		Bathroom one = new Bathroom();
-		Bathroom two = new Bathroom();
-		assertEquals(one,two);
-		
-		one.rate(5);
-		two.rate(10);
-		assertNotEquals(one,two);
-		two.rate(0);
-		assertEquals(one,two);
-		
-		one = null;
-		Throwable e = null;
-		try{
-			one.equals(two);
-		}catch(NullPointerException ex){
-			e = ex;
-		}
-		assertNotNull(e);
-		e = null;
-		try{
-			two.equals(one);
-		}catch(NullPointerException ex){
-			e = ex;
-		}
-		assertNotNull(e);
-		e = null;
-		try{
-			one.equals(null);
-		}catch(NullPointerException ex){
-			e = ex;
-		}
-		assertNotNull(e);
-		
-		assertNotEquals(two,new Object());
-	}
-	
-	@Test
 	public void RestaurantsEqualsTest() {
 		Restaurants one = new Restaurants();
 		Restaurants two = new Restaurants();
@@ -89,7 +51,6 @@ public class EqualsTest {
 	public void ResultsEqualsTest() {
 		Station stationOne = new Station();
 		stationOne.setAddress("Hello");
-		stationOne.getBathroom().rate(5);
 		stationOne.setLocation(new Location(10,10));
 		stationOne.setName("World");
 	    stationOne.setPrice(10);
@@ -98,7 +59,6 @@ public class EqualsTest {
 		oneRest.addRestaurant("!");
 		Station stationTwo = new Station();
 		stationTwo.setAddress("Hell");
-		stationTwo.getBathroom().rate(-5);
 		stationTwo.setLocation(new Location(-10,-10));
 		stationTwo.setName("Worl");
 	    stationTwo.setPrice(-10);
@@ -193,9 +153,7 @@ public class EqualsTest {
 		
 		one.setAddress("Hello");
 		assertEquals(one,two);
-		one.getBathroom().rate(5);
 		assertNotEquals(one,two);
-		two.getBathroom().rate(5);
 		assertEquals(one,two);
 		one.setLocation(new Location(10,10));
 		assertNotEquals(one,two);
