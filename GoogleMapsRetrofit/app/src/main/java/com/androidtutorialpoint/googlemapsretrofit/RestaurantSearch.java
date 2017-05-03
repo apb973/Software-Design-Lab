@@ -10,7 +10,7 @@ public class RestaurantSearch extends Queryable implements Searchable{
 		
 		for(int i = 0; i < finalSize; i++){
 			finalResult = finalResults.getStation(i);
-			finalResult.setRestaurants(getRestaurants(finalResult.getLocation()));
+			finalResult.setRestaurants(googleRestaurants(finalResult.getLocation()));
 		}
 		
 		finalResults = sort(finalResults);
