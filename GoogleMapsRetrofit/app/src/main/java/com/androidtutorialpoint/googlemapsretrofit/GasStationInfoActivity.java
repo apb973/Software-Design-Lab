@@ -6,8 +6,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class GasStationInfoActivity extends AppCompatActivity {
+
+    TextView gsName,gsAddress,gsPrice;
+    ListView restList;
+    String[] restArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +23,25 @@ public class GasStationInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        gsName = (TextView) findViewById(R.id.gsName);
+        gsName.setText(MapsActivity.clickedStation.getName());
+
+        gsAddress = (TextView) findViewById(R.id.gsAddress);
+        gsAddress.setText("   " + MapsActivity.clickedStation.getAddress());
+
+        gsPrice = (TextView) findViewById(R.id.priceTV);
+        gsPrice.setText("Price: $ " + MapsActivity.clickedStation.getPrice());
+
+        restList = (ListView) findViewById(R.id.ResturantList);
+
+        restArr = new String[MapsActivity.clickedStation.getRestaurants().size()];
+        for(int i = 0; i < MapsActivity.clickedStation.getRestaurants().size(); i++)
+        {
+            restArr[i] = MapsActivity.clickedStation.getRestaurants().getRestaurant(i);
+        }
+        ArrayAdapter adapter = new ArrayAdapter(GasStationInfoActivity.this, android.R.layout.simple_list_item_1 ,restArr );
+        restList.setAdapter(adapter);
+
     }
 
 }

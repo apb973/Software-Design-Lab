@@ -58,6 +58,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ListView listView;
 
     boolean searchMarkersShow = false;
+    String[] listOfGasStations;
+    static Station clickedStation;
+    Results results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +97,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(search != null && searchMarkersShow == false)
                 {
                     search.search();
-                    Results results = search.getResults();
-                    String[] listOfGasStations = new String[results.size()];
+                    results = search.getResults();
+                    listOfGasStations = new String[results.size()];
 
                     for(int i = 0; i < results.size(); i++)
                     {
@@ -111,6 +114,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     ArrayAdapter adapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_list_item_1 , listOfGasStations);
                     listView.setAdapter(adapter);
+
+//                    CustomAdapter adapter = new CustomAdapter(MapsActivity.this,listOfGasStations);
+//                    listView.setAdapter(adapter);
                 }
             }
         });
@@ -118,7 +124,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Click ListItem Number " + listOfGasStations[position].toString(), Toast.LENGTH_LONG).show();
+                mMap.clear();
+                clickedStation = results.getStation(position);
+                Intent intent = new Intent(MapsActivity.this, GasStationInfoActivity.class);
+                startActivity(intent);
             }
         });
 
