@@ -60,12 +60,13 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="396dp"
-            tools:context="com.androidtutorialpoint.googlemapsnearbyplaces.MapsActivity" />
+            tools:context="com.androidtutorialpoint.googlemapsnearbyplaces.MapsActivity"
+            android:layout_weight="0.88" />
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="95dp" />
 
     </LinearLayout>
 
