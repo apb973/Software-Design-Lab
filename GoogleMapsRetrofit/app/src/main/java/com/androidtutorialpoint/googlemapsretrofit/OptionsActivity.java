@@ -1,6 +1,7 @@
 package com.androidtutorialpoint.googlemapsretrofit;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -27,6 +30,9 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
 {
     Spinner spinner;
     CheckBox gasPriceCB,restCB,distCB;
+    private RadioButton rbtnDist, rbtnGP, rbtnRest;
+    private RadioGroup radioGroup;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,48 +59,32 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
 
-        //CheckBox
-        gasPriceCB = (CheckBox) findViewById(R.id.CheckBoxGP);
-        gasPriceCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                Search search = new Search();
-                search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
-                search.search();
-                Results results = search.getResults();
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                // find which radio button is selected
+                if(checkedId == R.id.radioBtnGP) {
+                    Toast.makeText(getApplicationContext(), "choice: Gas Price", Toast.LENGTH_SHORT).show();
+                    MapsActivity.search = new Search();
+                    MapsActivity.search.setFiltertoPrice();
+                    MapsActivity.search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
+                } else if(checkedId == R.id.radioBtnRest) {
+                    Toast.makeText(getApplicationContext(), "choice: Restaurant", Toast.LENGTH_SHORT).show();
+                    MapsActivity.search = new Search();
+                    MapsActivity.search.setFiltertoRestaurants();
+                    MapsActivity.search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
 
-                for(int i = 0; i < results.size(); i++)
-                {
-                    Log.d("onCheckBox"," " + results.getStation(i).getName() + "," + results.getStation(i).getAddress());
-                    MapsActivity.mMap.addMarker((new MarkerOptions())
-                            .position( new LatLng(results.getStation(i).getLocation().getLattitude()
-                                    ,results.getStation(i).getLocation().getLongitude()))
-                            .title(results.getStation(i).getName())
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                } else {
+                    Toast.makeText(getApplicationContext(), "choice: Distance", Toast.LENGTH_SHORT).show();
+                    MapsActivity.search = new Search();
+                    MapsActivity.search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
+
                 }
-
             }
-        }
-        );
-        //CheckBox
-        restCB = (CheckBox) findViewById(R.id.CheckBoxRest);
-        restCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                Toast.makeText(OptionsActivity.this, "Selected: Restaurant" , Toast.LENGTH_LONG).show();
-            }}
-        );
+        });
 
-        //CheckBox
-        distCB = (CheckBox) findViewById(R.id.CheckBoxDist);
-        distCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                Toast.makeText(OptionsActivity.this, "Selected: Distance" , Toast.LENGTH_LONG).show();
-            }}
-        );
-}
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

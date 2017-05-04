@@ -12,8 +12,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -38,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener {
 
     static public GoogleMap mMap;
+    static public Search search;
     View mapView;
     double latitude;
     double longitude;
@@ -46,8 +52,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static public Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    EditText editText;
-    Button btnGo;
+
+    private EditText editText;
+    private Button btnGo;
+    private ListView listView;
+
+    boolean searchMarkersShow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +81,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
+
         editText = (EditText) findViewById(R.id.editText);
+        listView = (ListView) findViewById(R.id.listView);
+
         btnGo = (Button) findViewById(R.id.button);
         btnGo.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
+
                 Toast.makeText(MapsActivity.this, "Selected: Enter" , Toast.LENGTH_LONG).show();
+                if(search != null && searchMarkersShow == false)
+                {
+                    search.search();
+                    Results results = search.getResults();
+                    String[] listOfGasStations = new String[results.size()];
+
+                    for(int i = 0; i < results.size(); i++)
+                    {
+                        Log.d("onCheckBox"," " + results.getStation(i).getName() + "," + results.getStation(i).getAddress());
+                        MapsActivity.mMap.addMarker((new MarkerOptions())
+                                .position( new LatLng(results.getStation(i).getLocation().getLattitude()
+                                        ,results.getStation(i).getLocation().getLongitude()))
+                                .title(results.getStation(i).getName())
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                        listOfGasStations[i] = results.getStation(i).getName();
+                    }
+                    searchMarkersShow = true;
+
+                    ArrayAdapter adapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_list_item_1 , listOfGasStations);
+                    listView.setAdapter(adapter);
+                }
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     private boolean CheckGooglePlayServices() {
@@ -108,9 +151,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        //Marker perth = mMap.addMarker(new MarkerOptions().position(mCurrLocationMarker.getPosition()).draggable(true));
-
-
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -137,12 +177,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             layoutParams.setMargins(0, 0, 30, 30);
         }
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("onClick", "Button is Clicked");
+                searchMarkersShow = false;
                 mMap.clear();
                 Intent intent = new Intent(MapsActivity.this, OptionsActivity.class);
                 startActivity(intent);
@@ -221,7 +261,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));

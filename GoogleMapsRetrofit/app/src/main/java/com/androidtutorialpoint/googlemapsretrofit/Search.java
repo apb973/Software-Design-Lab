@@ -36,6 +36,16 @@ public class Search {
 		}
 	}
 
+	public void setFiltertoPrice()
+	{
+		search = new PriceSearch();
+	}
+
+	public void setFiltertoRestaurants()
+	{
+		search = new RestaurantSearch();
+	}
+
 	//list of gas stations
 	public Results getResults(){
 		return results;
