@@ -30,7 +30,7 @@ public class GasStationInfoActivity extends AppCompatActivity {
         gsAddress.setText("   " + MapsActivity.clickedStation.getAddress());
 
         gsPrice = (TextView) findViewById(R.id.priceTV);
-        gsPrice.setText("Price: $ " + MapsActivity.clickedStation.getPrice());
+        gsPrice.setText("Price: $ " + MapsActivity.clickedStation.getPrice() + "/G");
 
         restList = (ListView) findViewById(R.id.ResturantList);
 
@@ -39,7 +39,7 @@ public class GasStationInfoActivity extends AppCompatActivity {
         {
             restArr[i] = MapsActivity.clickedStation.getRestaurants().getRestaurant(i);
         }
-        ArrayAdapter adapter = new ArrayAdapter(GasStationInfoActivity.this, android.R.layout.simple_list_item_1 ,restArr );
+        ArrayAdapter adapter = new ArrayAdapter(GasStationInfoActivity.this, android.R.layout.simple_list_item_1 ,restArr);
         restList.setAdapter(adapter);
 
     }

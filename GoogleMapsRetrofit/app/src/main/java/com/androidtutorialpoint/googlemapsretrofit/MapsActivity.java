@@ -45,8 +45,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static public GoogleMap mMap;
     static public Search search;
     View mapView;
-    double latitude;
-    double longitude;
+    static double latitude;
+    static double longitude;
+    double curLatitude;
+    double curLongitude;
     private int PROXIMITY_RADIUS = 10000;
     GoogleApiClient mGoogleApiClient;
     static public Location mLastLocation;
@@ -58,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ListView listView;
 
     boolean searchMarkersShow = false;
+    boolean gsPins = false;
     String[] listOfGasStations;
     static Station clickedStation;
     Results results;
@@ -85,7 +88,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
 
-        editText = (EditText) findViewById(R.id.editText);
         listView = (ListView) findViewById(R.id.listView);
 
         btnGo = (Button) findViewById(R.id.button);
@@ -111,6 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         listOfGasStations[i] = results.getStation(i).getName();
                     }
                     searchMarkersShow = true;
+                    gsPins = true;
 
                     ArrayAdapter adapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_list_item_1 , listOfGasStations);
                     listView.setAdapter(adapter);
@@ -125,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), "Click ListItem Number " + listOfGasStations[position].toString(), Toast.LENGTH_LONG).show();
-                mMap.clear();
+                //mMap.clear();
                 clickedStation = results.getStation(position);
                 Intent intent = new Intent(MapsActivity.this, GasStationInfoActivity.class);
                 startActivity(intent);
@@ -169,8 +172,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
@@ -185,6 +187,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             layoutParams.setMargins(0, 0, 30, 30);
+
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -193,22 +196,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Log.d("onClick", "Button is Clicked");
                 searchMarkersShow = false;
-                mMap.clear();
+                //mMap.clear();
                 Intent intent = new Intent(MapsActivity.this, OptionsActivity.class);
                 startActivity(intent);
-//                String url = getUrl(latitude, longitude, Option);
-//                Object[] DataTransfer = new Object[2];
-//                DataTransfer[0] = mMap;
-//                DataTransfer[1] = url;
-//                Log.d("onClick", url);
-//                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-//                getNearbyPlacesData.execute(DataTransfer);
-//                Toast.makeText(MapsActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
             }
         });
 
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng point) {
+                if (mCurrLocationMarker != null) {
+                    mCurrLocationMarker.remove();
+                }
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(point);
+                //markerOptions.title("Current Position");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                mCurrLocationMarker = mMap.addMarker(markerOptions);
+                longitude = point.longitude;
+                latitude = point.latitude;
+            }
+        });
 
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 
+            @Override
+            public boolean onMyLocationButtonClick() {
+                if (mCurrLocationMarker != null) {
+                    mCurrLocationMarker.remove();
+                }
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(new LatLng(curLatitude, curLongitude));
+                //markerOptions.title("Current Position");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                mCurrLocationMarker = mMap.addMarker(markerOptions);
+                longitude = curLongitude;
+                latitude = curLatitude;
+                return true;
+            }
+        });
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -262,10 +288,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Place current location marker
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        curLatitude = latitude;
+        curLongitude = longitude;
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("Current Position");
+        //markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 

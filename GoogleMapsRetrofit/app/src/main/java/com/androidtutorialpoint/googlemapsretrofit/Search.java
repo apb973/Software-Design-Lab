@@ -9,7 +9,7 @@ public class Search {
 	
 	//TODO: add constructors, searches, and setter using google places
 	
-	public Search getInstance(){
+	public static Search getInstance(){
 		if(singleton == null){
 			singleton = new Search();
 		}
@@ -45,6 +45,8 @@ public class Search {
 	{
 		search = new RestaurantSearch();
 	}
+
+	public void setFilterDist(){search = new NoFilterSearch();}
 
 	//list of gas stations
 	public Results getResults(){

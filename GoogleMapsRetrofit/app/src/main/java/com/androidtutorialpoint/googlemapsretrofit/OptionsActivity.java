@@ -68,17 +68,16 @@ public class OptionsActivity extends AppCompatActivity implements OnItemSelected
                     Toast.makeText(getApplicationContext(), "choice: Gas Price", Toast.LENGTH_SHORT).show();
                     MapsActivity.search = new Search();
                     MapsActivity.search.setFiltertoPrice();
-                    MapsActivity.search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
+                    MapsActivity.search.setLocation(new Location(MapsActivity.latitude,MapsActivity.longitude));
                 } else if(checkedId == R.id.radioBtnRest) {
                     Toast.makeText(getApplicationContext(), "choice: Restaurant", Toast.LENGTH_SHORT).show();
                     MapsActivity.search = new Search();
                     MapsActivity.search.setFiltertoRestaurants();
-                    MapsActivity.search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
-
+                    MapsActivity.search.setLocation(new Location(MapsActivity.latitude,MapsActivity.longitude));
                 } else {
                     Toast.makeText(getApplicationContext(), "choice: Distance", Toast.LENGTH_SHORT).show();
                     MapsActivity.search = new Search();
-                    MapsActivity.search.setLocation(new Location(MapsActivity.mLastLocation.getLatitude(),MapsActivity.mLastLocation.getLongitude()));
+                    MapsActivity.search.setLocation(new Location(MapsActivity.latitude,MapsActivity.longitude));
 
                 }
             }
