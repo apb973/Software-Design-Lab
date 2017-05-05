@@ -128,7 +128,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), "Click ListItem Number " + listOfGasStations[position].toString(), Toast.LENGTH_LONG).show();
-                //mMap.clear();
                 clickedStation = results.getStation(position);
                 Intent intent = new Intent(MapsActivity.this, GasStationInfoActivity.class);
                 startActivity(intent);
@@ -196,7 +195,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Log.d("onClick", "Button is Clicked");
                 searchMarkersShow = false;
-                //mMap.clear();
                 Intent intent = new Intent(MapsActivity.this, OptionsActivity.class);
                 startActivity(intent);
             }

@@ -50,13 +50,11 @@ public class Queryable {
 	}
 
 	public String fixAbbreviations(String abbreviated){
-
-		abbreviated = abbreviated.replaceAll(" Blvd ", " Boulevard,");
-		abbreviated = abbreviated.replaceAll(" Rd ", " Road,");
-		abbreviated = abbreviated.replaceAll(" St ", " Street,");
-		abbreviated = abbreviated.replaceAll(" Pkwy ", " Parkway,");
-		abbreviated = abbreviated.replaceAll(" Ave ", " Avenue,");
 		abbreviated = abbreviated.replaceAll(",.*$" , "");
+		abbreviated = abbreviated.replaceAll(" Blvd$", " Boulevard");
+		abbreviated = abbreviated.replaceAll(" Rd$", " Road");
+		abbreviated = abbreviated.replaceAll(" St$", " Street");
+		abbreviated = abbreviated.replaceAll(" Pkwy$", " Parkway");
 
 		abbreviated = abbreviated.replaceAll(" N " , " North ");
 		abbreviated = abbreviated.replaceAll(" W " , " West ");
@@ -155,7 +153,7 @@ public class Queryable {
 							if (!something.isEmpty()){
 								parsingArray = something.split("\\$");
 								for (int k = 1; k<11; k++){
-									parsingArray[k] = parsingArray[k].replaceAll(" " + city + ",", ",");
+									parsingArray[k] = parsingArray[k].replaceAll(" " + city, "");
 									parsingArray[k] = fixAbbreviations(parsingArray[k]);
 								}
 								for (int k = 1; k<11; k++) {
