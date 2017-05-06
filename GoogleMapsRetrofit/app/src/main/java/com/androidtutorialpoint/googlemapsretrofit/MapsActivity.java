@@ -43,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener {
 
     static public GoogleMap mMap;
-    static public Search search;
+    static public Search search = Search.getInstance();
     View mapView;
     static double latitude;
     static double longitude;
