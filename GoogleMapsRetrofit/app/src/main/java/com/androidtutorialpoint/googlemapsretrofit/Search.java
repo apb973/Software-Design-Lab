@@ -16,24 +16,10 @@ public class Search {
 		return singleton;
 	}
 	
-	public Search(){
+	private Search(){
 		search = new NoFilterSearch();
 		location = null;
 		results = null;
-	}
-	
-	public void setFilter(String filter){
-		switch(filter){
-		case "price":
-			search = new PriceSearch();
-			break;
-		case "restaurants":
-			search = new RestaurantSearch();
-			break;
-		default:
-			search = new NoFilterSearch();
-			break;
-		}
 	}
 
 	public void setFiltertoPrice()
@@ -63,28 +49,6 @@ public class Search {
 	}
 	
 	public void search(){
-		results = search.search(location);
-	}
-	
-	public void search(Location loc){
-		setLocation(loc);
-		results = search.search(location);
-	}
-	
-	public void search(String filter){
-		setFilter(filter);
-		results = search.search(location);
-	}
-	
-	public void search(String filter, Location loc){
-		setLocation(loc);
-		setFilter(filter);
-		results = search.search(location);
-	}
-	
-	public void search(Location loc, String filter){
-		setLocation(loc);
-		setFilter(filter);
 		results = search.search(location);
 	}
 }
