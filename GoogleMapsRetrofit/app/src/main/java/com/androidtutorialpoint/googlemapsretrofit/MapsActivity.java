@@ -59,8 +59,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button btnGo;
     private ListView listView;
 
-    boolean searchMarkersShow = false;
-    boolean gsPins = false;
     String[] listOfGasStations;
     static Station clickedStation;
     Results results;
@@ -96,8 +94,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View arg0) {
 
                 Toast.makeText(MapsActivity.this, "Selected: Enter" , Toast.LENGTH_LONG).show();
-                if(search != null && searchMarkersShow == false)
+                if(search != null)
                 {
+                    mMap.clear();
+                    mMap.addMarker((new MarkerOptions()).position(new LatLng(latitude,longitude))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    search.setLocation(new com.androidtutorialpoint.googlemapsretrofit.Location(latitude,longitude));
                     search.search();
                     results = search.getResults();
                     listOfGasStations = new String[results.size()];
@@ -105,16 +107,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     for(int i = 0; i < results.size(); i++)
                     {
                         Log.d("onCheckBox"," " + results.getStation(i).getName() + "," + results.getStation(i).getAddress());
-                        MapsActivity.mMap.addMarker((new MarkerOptions())
+                        mMap.addMarker((new MarkerOptions())
                                 .position( new LatLng(results.getStation(i).getLocation().getLattitude()
                                         ,results.getStation(i).getLocation().getLongitude()))
                                 .title(results.getStation(i).getName())
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
                         listOfGasStations[i] = results.getStation(i).getName();
                     }
-                    searchMarkersShow = true;
-                    gsPins = true;
-
                     ArrayAdapter adapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_list_item_1 , listOfGasStations);
                     listView.setAdapter(adapter);
 
@@ -194,7 +193,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Log.d("onClick", "Button is Clicked");
-                searchMarkersShow = false;
                 Intent intent = new Intent(MapsActivity.this, OptionsActivity.class);
                 startActivity(intent);
             }
@@ -208,11 +206,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(point);
-                //markerOptions.title("Current Position");
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
                 mCurrLocationMarker = mMap.addMarker(markerOptions);
                 longitude = point.longitude;
                 latitude = point.latitude;
+                printMarkers();
             }
         });
 
@@ -233,6 +231,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return true;
             }
         });
+    }
+
+    private void printMarkers()
+    {
+        mMap.clear();
+        mMap.addMarker((new MarkerOptions()).position(new LatLng(latitude,longitude))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+        if(results != null)
+        {
+            for(int i = 0; i < results.size(); i++)
+            {
+                Log.d("onCheckBox"," " + results.getStation(i).getName() + "," + results.getStation(i).getAddress());
+                mMap.addMarker((new MarkerOptions())
+                        .position( new LatLng(results.getStation(i).getLocation().getLattitude()
+                                ,results.getStation(i).getLocation().getLongitude()))
+                        .title(results.getStation(i).getName())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+            }
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {
