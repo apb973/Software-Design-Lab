@@ -16,7 +16,7 @@ public class Search {
 		return singleton;
 	}
 	
-	public Search(){
+	private Search(){
 		search = new NoFilterSearch();
 		location = null;
 		results = null;
