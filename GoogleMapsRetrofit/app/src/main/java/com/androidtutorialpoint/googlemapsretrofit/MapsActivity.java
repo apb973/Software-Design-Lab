@@ -291,6 +291,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private boolean first = true;            
+                
     @Override
     public void onLocationChanged(Location location) {
         Log.d("onLocationChanged", "entered");
@@ -299,26 +301,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
+        curLatitude = location.getLatitude();
+        curLongitude = location.getLongitude();
+        
+        if(first){
+                
+                //Place current location marker
+                latitude = curLatitude;
+                longitude = curLongitude;
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                //markerOptions.title("Current Position");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                mCurrLocationMarker = mMap.addMarker(markerOptions);
 
-        //Place current location marker
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        curLatitude = latitude;
-        curLongitude = longitude;
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        //markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
+                //move map camera
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+                first = false;
+        }
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
-
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
