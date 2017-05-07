@@ -15,10 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -37,31 +34,31 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
     static public GoogleMap mMap;
-    static public Search search;
+    static public Search search = Search.getInstance();
     View mapView;
     static double latitude;
     static double longitude;
     double curLatitude;
     double curLongitude;
-    private int PROXIMITY_RADIUS = 10000;
     GoogleApiClient mGoogleApiClient;
     static public Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
-    private EditText editText;
     private Button btnGo;
     private ListView listView;
 
     String[] listOfGasStations;
     static Station clickedStation;
-    Results results;
+    static Results results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +97,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.addMarker((new MarkerOptions()).position(new LatLng(latitude,longitude))
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                     search.setLocation(new com.androidtutorialpoint.googlemapsretrofit.Location(latitude,longitude));
+
                     search.search();
                     results = search.getResults();
                     listOfGasStations = new String[results.size()];
-
                     for(int i = 0; i < results.size(); i++)
                     {
                         Log.d("onCheckBox"," " + results.getStation(i).getName() + "," + results.getStation(i).getAddress());
@@ -114,11 +111,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
                         listOfGasStations[i] = results.getStation(i).getName();
                     }
-                    ArrayAdapter adapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_list_item_1 , listOfGasStations);
+                    ArrayAdapter adapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_list_item_1, listOfGasStations);
                     listView.setAdapter(adapter);
-
-//                    CustomAdapter adapter = new CustomAdapter(MapsActivity.this,listOfGasStations);
-//                    listView.setAdapter(adapter);
                 }
             }
         });
@@ -221,19 +215,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker.remove();
                 }
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(curLatitude, curLongitude));
-                //markerOptions.title("Current Position");
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-                mCurrLocationMarker = mMap.addMarker(markerOptions);
+                mMap.clear();
                 longitude = curLongitude;
                 latitude = curLatitude;
+                printMarkers();
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(curLatitude,curLongitude)));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
                 return true;
             }
         });
     }
 
-    private void printMarkers()
+    public static void printMarkers()
     {
         mMap.clear();
         mMap.addMarker((new MarkerOptions()).position(new LatLng(latitude,longitude))
@@ -273,23 +266,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
     }
-
-    private String getUrl(double latitude, double longitude, String nearbyPlace) {
-
-        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googlePlacesUrl.append("location=" + latitude + "," + longitude);
-        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
-        googlePlacesUrl.append("&type=" + nearbyPlace);
-        googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key=" + "AIzaSyATuUiZUkEc_UgHuqsBJa1oqaODI-3mLs0");
-        Log.d("getUrl", googlePlacesUrl.toString());
-        return (googlePlacesUrl.toString());
-    }
-
     @Override
     public void onConnectionSuspended(int i) {
 
     }
+
+    private boolean first = true;
 
     @Override
     public void onLocationChanged(Location location) {
@@ -299,33 +281,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
+        curLatitude = location.getLatitude();
+        curLongitude = location.getLongitude();
 
-        //Place current location marker
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        curLatitude = latitude;
-        curLongitude = longitude;
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        //markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        if(first){
 
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
+            //Place current location marker
+            latitude = curLatitude;
+            longitude = curLongitude;
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            //markerOptions.title("Current Position");
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+            mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+            //move map camera
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+            first = false;
+        }
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
-
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             Log.d("onLocationChanged", "Removing Location Updates");
         }
         Log.d("onLocationChanged", "Exit");
-
     }
 
     @Override

@@ -16,15 +16,6 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <!--<EditText-->
-                <!--android:id="@+id/editText"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:ems="10"-->
-                <!--android:inputType="textPersonName"-->
-                <!--android:text="Name" />-->
-
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
@@ -47,6 +38,8 @@
 
         </android.support.v7.widget.Toolbar>
 
+
+
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
@@ -60,8 +53,10 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="396dp"
-            tools:context="com.androidtutorialpoint.googlemapsnearbyplaces.MapsActivity"
-            android:layout_weight="0.88" />
+            android:layout_weight="0.88"
+            tools:context="com.androidtutorialpoint.googlemapsnearbyplaces.MapsActivity">
+
+        </fragment>
 
         <ListView
             android:id="@+id/listView"
