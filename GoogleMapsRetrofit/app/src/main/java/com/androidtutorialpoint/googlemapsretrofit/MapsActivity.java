@@ -271,13 +271,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-<<<<<<< HEAD
     private boolean first = true;
 
-=======
-    private boolean first = true;            
-                
->>>>>>> 4cfb1e94a209a4b20acc166571616cf498e7d971
     @Override
     public void onLocationChanged(Location location) {
         Log.d("onLocationChanged", "entered");
@@ -288,7 +283,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         curLatitude = location.getLatitude();
         curLongitude = location.getLongitude();
-<<<<<<< HEAD
 
         if(first){
 
@@ -306,25 +300,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
             first = false;
-=======
-        
-        if(first){
-                
-                //Place current location marker
-                latitude = curLatitude;
-                longitude = curLongitude;
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                //markerOptions.title("Current Position");
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-                mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-                //move map camera
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-                first = false;
->>>>>>> 4cfb1e94a209a4b20acc166571616cf498e7d971
         }
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
